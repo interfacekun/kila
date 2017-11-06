@@ -4,6 +4,7 @@ import hashlib
 import reply
 import receive
 import web
+import robot
 
 class Handle(object):
     def POST(self):
@@ -14,7 +15,10 @@ class Handle(object):
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
-                content = "嗨，这么巧的!"
+                content = recMsg.Content
+                content = robot.getRobotReply(fromUser, content)
+                print content
+                #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
