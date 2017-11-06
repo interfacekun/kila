@@ -7,7 +7,7 @@ import urllib2
 import re
 import time
 
-class Robot(object):
+class Robot():
 	def __init__(self):
 		self.mykey = "2ba52d0c1f3341d18be2e48fc4405b3d"
 		self.url = "http://www.tuling123.com/openapi/api"
