@@ -28,7 +28,8 @@ class Handle(object):
                 #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 mediaType = "news"
-                self.material.batch_get(accessToken, mediaType)
+                newsMaterial = self.material.batch_get(accessToken, mediaType)
+                print(newsMaterial)
                 return replyMsg.send()
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
