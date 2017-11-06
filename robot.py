@@ -17,7 +17,7 @@ class Robot():
 			fs=urllib2.urlopen(url=self.url, data=json_data)
 			result_str = fs.read().decode('utf-8')
 			json_resp = json.loads(result_str,encoding="utf-8")
-			return json_resp["text"]
+			return json_resp["text"].encoding="utf-8"
 		except Exception as e:
 				print e
 				return "对不起，我可能宕机了!"
