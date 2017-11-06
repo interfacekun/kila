@@ -5,22 +5,30 @@ import reply
 import receive
 import web
 from robot import Robot
+from basic import Basic
+from material import Material
 
 class Handle(object):
+    def __init__(self):
+        self.robot = Robot()
+        self.basic = Basic()
+        self.material = Material()
     def POST(self):
         try:
             webData = web.data()
             print "Handle Post webdata is ", webData   #后台打日志
             recMsg = receive.parse_xml(webData)
-            robot = Robot()
+            accessToken = self.basic.get_access_token()
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 content = recMsg.Content
-                content = robot.getRobotReply(fromUser, content)
+                content = self.robot.getRobotReply(fromUser, content)
                 print content
                 #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
+                mediaType = "news"
+                self.material.batch_get(accessToken, mediaType)
                 return replyMsg.send()
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
