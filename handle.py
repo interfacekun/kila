@@ -22,6 +22,7 @@ class Handle(object):
                 fromUser = recMsg.ToUserName
                 mediaId = recMsg.MediaId
                 replyMsg = reply.ImageMsg(toUser, fromUser, mediaId)
+                return replyMsg.send()
             else:
                 print "暂且不处理"
                 return "success"
