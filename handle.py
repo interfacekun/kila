@@ -17,7 +17,7 @@ class Handle(object):
                 content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 return replyMsg.send()
-            else if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
+            elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 mediaId = recMsg.MediaId
