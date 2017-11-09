@@ -48,9 +48,15 @@ class Handle(object):
                                     artist = row[3]
                                     url = row[4]
                                     pwd = row[5]
-                                    content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName, artist, url, pwd)
-                                    replyMsg = reply.TextMsg(toUser, fromUser, content)
-                                    return replyMsg.send()
+                                    try:
+                                        content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName, artist, url, pwd)
+                                        replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                        return replyMsg.send()
+                                    except Exception as e:
+                                        print e.reason
+                                        content = "嗨，这么巧的!"
+                                        replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                        return replyMsg.send()
                     else:
                         content = self.robot.getRobotReply(fromUser, content)
                         print content
