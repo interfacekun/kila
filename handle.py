@@ -37,7 +37,7 @@ class Handle(object):
                         if results.group(1):
                             muiscName = results.group(1)
                             sql = "select * from musicApe where `musicName` like '%%%s%%' limit 10;"
-                            args = (muiscName)
+                            args = (muiscName.encode("utf-8"))
                             musicList = self.dao.launchSQL(sql, args)
                             if musicList:
                                 for row in musicList:
@@ -50,9 +50,6 @@ class Handle(object):
                 print content
                 #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
-                mediaType = "news"
-                newsMaterial = self.material.batch_get(accessToken, mediaType)
-                print(newsMaterial)
                 return replyMsg.send()
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
