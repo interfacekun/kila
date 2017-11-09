@@ -44,16 +44,22 @@ class Handle(object):
                             musicList = self.dao.launchSQL(sql, args)
                             if musicList:
                                 for row in musicList:
-                                    for v in row:
-                                        print v
+                                    muiscName = row[2]
+                                    artist = row[3]
+                                    url = row[4]
+                                    pwd = row[5]
+                                    content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName, artist, url, pwd)
+                                    replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                    return replyMsg.send()
+                    else:
+                        content = self.robot.getRobotReply(fromUser, content)
+                        print content
+                        #content = "嗨，这么巧的!"
+                        replyMsg = reply.TextMsg(toUser, fromUser, content)
+                        return replyMsg.send()
                 except Exception as e:
                     print("[--erorr--]", e.reason)
 
-                content = self.robot.getRobotReply(fromUser, content)
-                print content
-                #content = "嗨，这么巧的!"
-                replyMsg = reply.TextMsg(toUser, fromUser, content)
-                return replyMsg.send()
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
