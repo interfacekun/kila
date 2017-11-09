@@ -30,7 +30,7 @@ class Handle(object):
                 content = recMsg.Content
                 try:
                     print "123"
-                    print content, chardet.detect(content)
+                    print content
                     reString = r'歌曲 (.*)'
                     results = re.search(re.compile(reString), content)
                     if results:
