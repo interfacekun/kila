@@ -28,22 +28,25 @@ class Handle(object):
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 content = recMsg.Content
-                print content, chardet.detect(content)
-                reString = r'歌曲 (.*)'
-                results = re.search(re.compile(reString), content)
-                if results:
-                    if results.group(1):
-                        muiscName = results.group(1)
-                        sql = "select * from musicApe where `musicName` like '%%%s%%' limit 10;"
-                        args = (muiscName)
-                        musicList = self.dao.launchSQL(sql, args)
-                        if musicList:
-                            for row in musicList:
-                                for v in row:
-                                    print v
+                try:
+                    print content, chardet.detect(content)
+                    reString = r'歌曲 (.*)'
+                    results = re.search(re.compile(reString), content)
+                    if results:
+                        if results.group(1):
+                            muiscName = results.group(1)
+                            sql = "select * from musicApe where `musicName` like '%%%s%%' limit 10;"
+                            args = (muiscName)
+                            musicList = self.dao.launchSQL(sql, args)
+                            if musicList:
+                                for row in musicList:
+                                    for v in row:
+                                        print v
+                except Exception as e:
+                    print("[--erorr--]", e.reason)
 
                 content = self.robot.getRobotReply(fromUser, content)
-                print content, chardet.detect(content)
+                print content
                 #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 mediaType = "news"
