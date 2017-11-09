@@ -37,7 +37,9 @@ class Handle(object):
                         if results.group(1):
                             muiscName = results.group(1)
                             sql = "select * from musicApe where `musicName` like '%%%s%%' limit 10;"
-                            args = (muiscName.encode("utf-8"))
+                            if isinstance(muiscName, unicode):
+                                muiscName = muiscName.encode('utf-8')
+                            args = (muiscName)
                             musicList = self.dao.launchSQL(sql, args)
                             if musicList:
                                 for row in musicList:
