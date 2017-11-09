@@ -28,9 +28,7 @@ class Handle(object):
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 content = recMsg.Content
-                content = self.robot.getRobotReply(fromUser, content)
                 print content, chardet.detect(content)
-
                 reString = r'歌曲 (.*)'
                 results = re.search(re.compile(reString), content)
                 if results:
@@ -44,6 +42,8 @@ class Handle(object):
                                 for v in row:
                                     print v
 
+                content = self.robot.getRobotReply(fromUser, content)
+                print content, chardet.detect(content)
                 #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 mediaType = "news"
