@@ -22,13 +22,14 @@ class Handle(object):
             webData = web.data()
             print "Handle Post webdata is ", webData   #后台打日志
             recMsg = receive.parse_xml(webData)
-            accessToken = self.basic.get_access_token()
-            print accessToken
+            # accessToken = self.basic.get_access_token()
+            # print accessToken
             if isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'text':
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 content = recMsg.Content
                 try:
+                    print "123"
                     print content, chardet.detect(content)
                     reString = r'歌曲 (.*)'
                     results = re.search(re.compile(reString), content)
