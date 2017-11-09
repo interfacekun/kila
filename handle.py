@@ -29,7 +29,6 @@ class Handle(object):
                 fromUser = recMsg.ToUserName
                 content = recMsg.Content
                 try:
-                    print "123"
                     print content
                     reString = r'歌曲 (.*)'
                     results = re.search(re.compile(reString), content)
@@ -37,11 +36,12 @@ class Handle(object):
                         if results.group(1):
                             muiscName = results.group(1)
                             if isinstance(muiscName, unicode):
+                                print "123"
                                 muiscName = muiscName.encode('utf-8')
                             print muiscName
-                            sql = "select * from musicApe where `musicName` like '%%%%%s%%%%' limit 10;" % (muiscName)
+                            sql = "select * from musicApe where `musicName` like '%%%%%s%%%%' limit 10;"
                             args = (muiscName)
-                            musicList = self.dao.launchSQL(sql)
+                            musicList = self.dao.launchSQL(sql, args)
                             if musicList:
                                 for row in musicList:
                                     for v in row:
