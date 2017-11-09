@@ -50,6 +50,7 @@ class Handle(object):
                                     pwd = row[5]
                                     try:
                                         content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName, artist, url, pwd)
+                                        print content
                                         replyMsg = reply.TextMsg(toUser, fromUser, content)
                                         return replyMsg.send()
                                     except Exception as e:
