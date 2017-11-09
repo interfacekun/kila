@@ -7,12 +7,16 @@ import web
 from robot import Robot
 from basic import Basic
 from material import Material
+from dao import Dao
+import re
 
 class Handle(object):
     def __init__(self):
         self.robot = Robot()
         self.basic = Basic()
         self.material = Material()
+        self.dao  = Dao
+        self.dao.connect()
     def POST(self):
         try:
             webData = web.data()
@@ -25,7 +29,21 @@ class Handle(object):
                 fromUser = recMsg.ToUserName
                 content = recMsg.Content
                 content = self.robot.getRobotReply(fromUser, content)
-                print content
+                print content, chardet.detect(content)
+
+                reString = r'歌曲 (.*)'
+                results = re.search(re.compile(reString), content)
+                if results:
+                    if results.group(1):
+                        muiscName = results.group(1)
+                        sql = "select * from musicApe where `musicName` like '%%%s%%' limit 10;"
+                        args = (muiscName)
+                        musicList = self.dao.launchSQL(sql, args)
+                        if musicList:
+                            for row in musicList:
+                                for v in row:
+                                    print v
+
                 #content = "嗨，这么巧的!"
                 replyMsg = reply.TextMsg(toUser, fromUser, content)
                 mediaType = "news"
