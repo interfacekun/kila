@@ -49,15 +49,16 @@ class Handle(object):
                                     url = row[4]
                                     pwd = row[5]
                                     try:
-                                        content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
+                                        content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：\n%s\n密码：%s" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
                                         print content
                                         replyMsg = reply.TextMsg(toUser, fromUser, content)
                                         return replyMsg.send()
                                     except Exception as e:
                                         print e.reason
-                                        content = "嗨，这么巧的!"
-                                        replyMsg = reply.TextMsg(toUser, fromUser, content)
-                                        return replyMsg.send()
+
+                            content = "不好意思程序员有点菜，没找到这首戨!"
+                            replyMsg = reply.TextMsg(toUser, fromUser, content)
+                            return replyMsg.send()
                     else:
                         content = self.robot.getRobotReply(fromUser, content)
                         print content
