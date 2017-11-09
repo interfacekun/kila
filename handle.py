@@ -44,12 +44,12 @@ class Handle(object):
                             musicList = self.dao.launchSQL(sql, args)
                             if musicList:
                                 for row in musicList:
-                                    muiscName = row[2]
+                                    musicName = row[2]
                                     artist = row[3]
                                     url = row[4]
                                     pwd = row[5]
                                     try:
-                                        content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName, artist, url, pwd)
+                                        content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：%s\n密码：%s" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
                                         print content
                                         replyMsg = reply.TextMsg(toUser, fromUser, content)
                                         return replyMsg.send()
