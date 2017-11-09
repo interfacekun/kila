@@ -36,6 +36,7 @@ class Handle(object):
                     if results:
                         if results.group(1):
                             muiscName = results.group(1)
+                            print muiscName
                             sql = "select * from musicApe where `musicName` like '%%%s%%' limit 10;"
                             if isinstance(muiscName, unicode):
                                 muiscName = muiscName.encode('utf-8')
