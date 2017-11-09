@@ -15,7 +15,7 @@ class Handle(object):
         self.robot = Robot()
         self.basic = Basic()
         self.material = Material()
-        self.dao  = Dao
+        self.dao  = Dao()
         self.dao.connect()
     def POST(self):
         try:
