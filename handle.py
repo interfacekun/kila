@@ -39,7 +39,7 @@ class Handle(object):
                                 print "123"
                                 muiscName = muiscName.encode('utf-8')
                             print muiscName
-                            sql = "select * from music where `musicName` like %s limit 10;"
+                            sql = "select * from music where `musicName` like %s limit 5;"
                             args = ('%%%s%%' % muiscName)
                             musicList = self.dao.launchSQL(sql, args)
                             if musicList:
@@ -52,21 +52,65 @@ class Handle(object):
                                         content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：\n%s\n密码：%s" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
                                         print content
                                         replyMsg = reply.TextMsg(toUser, fromUser, content)
-                                        return replyMsg.send()
+                                        replyMsg.send()
                                     except Exception as e:
-                                        print e.reason
+                                        print e
 
-                            content = "不好意思程序员有点菜，没找到这首戨!"
+                            content = "不好意思程序员有点菜，没找到这首歌!"
                             replyMsg = reply.TextMsg(toUser, fromUser, content)
                             return replyMsg.send()
                     else:
-                        content = self.robot.getRobotReply(fromUser, content)
-                        print content
-                        #content = "嗨，这么巧的!"
-                        replyMsg = reply.TextMsg(toUser, fromUser, content)
-                        return replyMsg.send()
+                        reString = r'歌手 (.*) (.*)'
+                        results = re.search(re.compile(reString), content)
+                        if results:
+                            if results.group(1):
+                                if results.group(2):
+                                    page = int(results.group(2))
+                                    sql = "select * from music where `artist` like %s;"
+                                    args = ('%%%s%% limit %d, %d' % (artist, (page-1)*5+1, page*5))
+                                    musicList = self.dao.launchSQL(sql, args)
+                                    content = ""
+                                    for row in musicList:
+                                        musicName = row[2]
+                                        artist = row[3]
+                                        url = row[4]
+                                        pwd = row[5]
+                                        try:
+                                            content = content + "歌曲名：%s\n百度云盘下载地址：\n%s\n密码：%s\n\n" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
+                                            print content
+                                        except Exception as e:
+                                            print e
+                                    replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                    replyMsg.send()
+                                else:
+                                    sql = "select * from music where `artist` like %s limit 5;"
+                                    args = ('%%%s%%' % artist)
+                                    musicList = self.dao.launchSQL(sql, args)
+                                    content = ""
+                                    for row in musicList:
+                                        musicName = row[2]
+                                        artist = row[3]
+                                        url = row[4]
+                                        pwd = row[5]
+                                        try:
+                                            content = content + "歌曲名：%s\n百度云盘下载地址：\n%s\n密码：%s\n\n" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
+                                            print content
+                                        except Exception as e:
+                                            print e
+                                    replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                    replyMsg.send()
+                            else:
+                                content = "不好意思程序员有点菜，没有收录该艺术家的歌曲!"
+                                replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                return replyMsg.send()
+                        else:
+                            content = self.robot.getRobotReply(fromUser, content)
+                            print content
+                            #content = "嗨，这么巧的!"
+                            replyMsg = reply.TextMsg(toUser, fromUser, content)
+                            return replyMsg.send()
                 except Exception as e:
-                    print("[--erorr--]", e.reason)
+                    print("[--erorr--]", e)
 
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
