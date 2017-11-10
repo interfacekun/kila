@@ -29,12 +29,12 @@ class MsgImg(object):
         self.MsgType = xmlData.find('MsgType').text
         self.MsgId = xmlData.find('MsgId').text
 
-class TextMsg(Msg):
+class TextMsg(MsgText):
     def __init__(self, xmlData):
         MsgText.__init__(self, xmlData)
         self.Content = xmlData.find('Content').text.encode("utf-8")
 
-class ImageMsg(Msg):
+class ImageMsg(MsgImg):
     def __init__(self, xmlData):
         MsgImg.__init__(self, xmlData)
         self.PicUrl = xmlData.find('PicUrl').text
