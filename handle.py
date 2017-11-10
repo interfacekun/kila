@@ -40,7 +40,7 @@ class Handle(object):
                                 muiscName = muiscName.encode('utf-8')
                             print muiscName
                             sql = "select * from music where `musicName` like %s limit 5;"
-                            args = ('%%%s%%' % muiscName)
+                            args = ('%s%%' % muiscName)
                             musicList = self.dao.launchSQL(sql, args)
                             content = ""
                             i = 0
