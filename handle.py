@@ -78,9 +78,6 @@ class Handle(object):
                                 sql = "select * from music where `artist` like %s limit 5;"
                                 args = ('%s%%' % artist)
                                 return self.getMusic(sql, args)
-
-                    else:
-
                     content = self.robot.getRobotReply(fromUser, content)
                     print content
                     #content = "嗨，这么巧的!"
