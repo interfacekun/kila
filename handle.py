@@ -97,7 +97,11 @@ class Handle(object):
                 toUser = recMsg.FromUserName
                 fromUser = recMsg.ToUserName
                 mediaId = recMsg.MediaId
-                replyMsg = reply.ImageMsg(toUser, fromUser, mediaId)
+                content = "发一张图片给你！"
+                content1 = self.robot.getRobotReply(fromUser, content)
+                print conten1
+                content2 = "你是不是搞事？图片还你！"
+                replyMsg = reply.ImageMsg(toUser, fromUser, mediaId, content1, content2)
                 return replyMsg.send()
             else:
                 print "暂且不处理"
