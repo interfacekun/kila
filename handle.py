@@ -42,23 +42,26 @@ class Handle(object):
                             sql = "select * from music where `musicName` like %s limit 5;"
                             args = ('%%%s%%' % muiscName)
                             musicList = self.dao.launchSQL(sql, args)
+                            content = ""
+                            i = 0
                             if musicList:
                                 for row in musicList:
+                                    i = i + 1
                                     musicName = row[2]
                                     artist = row[3]
                                     url = row[4]
                                     pwd = row[5]
                                     try:
-                                        content = "歌曲名：%s\n歌手：%s\n百度云盘下载地址：\n%s\n密码：%s" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
-                                        print content
-                                        replyMsg = reply.TextMsg(toUser, fromUser, content)
-                                        replyMsg.send()
+                                        content = content + "歌曲名：%s\n歌手：%s\n百度云盘下载地址：\n%s\n密码：%s\n\n" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
                                     except Exception as e:
                                         print e
-
-                            content = "不好意思程序员有点菜，没找到这首歌!"
-                            replyMsg = reply.TextMsg(toUser, fromUser, content)
-                            return replyMsg.send()
+                                print content
+                                replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                return replyMsg.send()
+                            if i == 0:
+                                content = "不好意思程序员有点菜，没找到这首歌!"
+                                replyMsg = reply.TextMsg(toUser, fromUser, content)
+                                return replyMsg.send()
                     else:
                         reString = r'歌手 (.*) (.*)'
                         results = re.search(re.compile(reString), content)
@@ -77,11 +80,11 @@ class Handle(object):
                                         pwd = row[5]
                                         try:
                                             content = content + "歌曲名：%s\n百度云盘下载地址：\n%s\n密码：%s\n\n" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
-                                            print content
                                         except Exception as e:
                                             print e
+                                    print content
                                     replyMsg = reply.TextMsg(toUser, fromUser, content)
-                                    replyMsg.send()
+                                    return replyMsg.send()
                                 else:
                                     sql = "select * from music where `artist` like %s limit 5;"
                                     args = ('%%%s%%' % artist)
@@ -94,11 +97,11 @@ class Handle(object):
                                         pwd = row[5]
                                         try:
                                             content = content + "歌曲名：%s\n百度云盘下载地址：\n%s\n密码：%s\n\n" % (musicName.encode("utf-8"), artist.encode("utf-8"), url.encode("utf-8"), pwd.encode("utf-8"))
-                                            print content
                                         except Exception as e:
                                             print e
+                                    print content
                                     replyMsg = reply.TextMsg(toUser, fromUser, content)
-                                    replyMsg.send()
+                                    return replyMsg.send()
                             else:
                                 content = "不好意思程序员有点菜，没有收录该艺术家的歌曲!"
                                 replyMsg = reply.TextMsg(toUser, fromUser, content)
