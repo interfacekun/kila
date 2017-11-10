@@ -67,6 +67,7 @@ class Handle(object):
                         results = re.search(re.compile(reString), content)
                         if results:
                             if results.group(1):
+                                artist = results.group(1)
                                 if results.group(2):
                                     page = int(results.group(2))
                                     sql = "select * from music where `artist` like %s;"
