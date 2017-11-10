@@ -74,6 +74,12 @@ class Handle(object):
                                 sql = sql % artist
                                 sql = sql + "limit %d, %d;" % (start, end)
                                 return self.getMusic(toUser, fromUser,sql)
+                            if len(results) == 4 and results[2] == "歌曲" and results[3]:
+                                musicName = results[3]
+                                sql = "select * from music where `artist` like '%s%%' "; 
+                                sql = sql % artist
+                                sql = sql + "and `muiscName` like '%s%%';" % musicName
+                                return self.getMusic(toUser, fromUser,sql)
                             else:
                                 sql = "select * from music where `artist` like %s limit 5;"
                                 args = ('%s%%' % artist)
