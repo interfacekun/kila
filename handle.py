@@ -78,7 +78,7 @@ class Handle(object):
                                 musicName = results[3]
                                 sql = "select * from music where `artist` like '%s%%' "; 
                                 sql = sql % artist
-                                sql = sql + "and `muiscName` like '%s%%';" % musicName
+                                sql = sql + "and `musicName` like '%s%%';" % musicName
                                 return self.getMusic(toUser, fromUser,sql)
                             else:
                                 sql = "select * from music where `artist` like %s limit 5;"
