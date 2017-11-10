@@ -73,11 +73,11 @@ class Handle(object):
                                 sql = "select * from music where `artist` like '%s%%' "; 
                                 sql = sql % artist
                                 sql = sql + "limit %d, %d;" % (start, end)
-                                return self.getMusic(sql)
+                                return self.getMusic(toUser, fromUser,sql)
                             else:
                                 sql = "select * from music where `artist` like %s limit 5;"
                                 args = ('%s%%' % artist)
-                                return self.getMusic(sql, args)
+                                return self.getMusic(toUser, fromUser,sql, args)
                     content = self.robot.getRobotReply(fromUser, content)
                     print content
                     #content = "嗨，这么巧的!"
@@ -99,7 +99,7 @@ class Handle(object):
         except Exception, Argment:
             return Argment
 
-    def getMusic(self, sql, args = None):
+    def getMusic(self, toUser, fromUser, sql, args = None):
         musicList = self.dao.launchSQL(sql, args)
         i = 0
         content = ""
