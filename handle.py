@@ -67,13 +67,21 @@ class Handle(object):
                         if len(results) >= 2 and results[1]:
                             artist = results[1]
                             if len(results) == 3 and results[2]:
-                                page = int(results[2])
-                                start = (page-1)*5+1
-                                end = 5
-                                sql = "select * from music where `artist` like '%s%%' "; 
-                                sql = sql % artist
-                                sql = sql + "limit %d, %d;" % (start, end)
-                                return self.getMusic(toUser, fromUser,sql)
+                                try:
+                                    page = int(results[2])
+                                    start = (page-1)*5+1
+                                    end = 5
+                                    sql = "select * from music where `artist` like '%s%%' "; 
+                                    sql = sql % artist
+                                    sql = sql + "limit %d, %d;" % (start, end)
+                                    return self.getMusic(toUser, fromUser,sql)
+                                except Exception as e:
+                                    print e
+                                    musicName = results[2]
+                                    sql = "select * from music where `artist` like '%s%%' "; 
+                                    sql = sql % artist
+                                    sql = sql + "and `musicName` like '%s%%';" % musicName
+                                    return self.getMusic(toUser, fromUser,sql)
                             if len(results) == 4 and results[2] == "歌曲" and results[3]:
                                 musicName = results[3]
                                 sql = "select * from music where `artist` like '%s%%' "; 
