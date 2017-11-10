@@ -68,8 +68,8 @@ class Handle(object):
                             artist = results[1]
                             if len(results) == 3 and results[2]:
                                 page = int(results[2])
-                                start = 5
-                                end = page+4
+                                start = (page-1)*5+1
+                                end = 5
                                 sql = "select * from music where `artist` like '%s%%' "; 
                                 sql = sql % artist
                                 sql = sql + "limit %d, %d;" % (start, end)
