@@ -149,14 +149,14 @@ class Spider():
 			print content
 		else:
 			print content
-	def getInstagramImg(self, page = None, url = None, reString = None):
+			
+	def getInstagramAsset(self, page = None, url = None, reString = None):
 		if not page:
 			page = self.GET(url)
 		if type(page) == type('a'):
 			reString = reString or r'"(https://scontent-sin6-2.cdninstagram.com/[^{]*?/\w750x750/.*?)"'
 			results = re.finditer(re.compile(reString), page)
-			for m in results:
-				print("url:", m.groups(1))
+			return results
 
 
 if __name__ == '__main__':
@@ -209,4 +209,4 @@ if __name__ == '__main__':
 	# 			spider.getMusic(sql, args)
 	# 			
 	url = "https://www.instagram.com/p/Bbf6cNOnolj/"
-	spider.getInstagramImg(None, url)
+	spider.getInstagramAsset(None, url)
