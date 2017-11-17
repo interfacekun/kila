@@ -1,0 +1,48 @@
+https://www.instagram.com/p/BbftyvngIHy/
+
+id:1425767024389221
+ev:SubscribedButtonClick
+dl:https://www.instagram.com/p/BbftyvngIHy/
+rl:
+if:false
+ts:1510881285545
+cd[buttonText]:
+cd[buttonFeatures]:{"name":"","id":"","tag":"a","classList":"_8kphn _by8kl coreSpriteRightChevron","innerText":"","numChildButtons":0,"destination":""}
+cd[formFeatures]:[]
+v:2.8.1
+o:28
+
+
+id:1425767024389221
+ev:SubscribedButtonClick
+dl:https://www.instagram.com/p/BbftyvngIHy/
+rl:
+if:false
+ts:1510881493082
+cd[buttonText]:
+cd[buttonFeatures]:{"name":"","id":"","tag":"a","classList":"_8kphn _pak6p coreSpriteLeftChevron","innerText":"","numChildButtons":0,"destination":""}
+cd[formFeatures]:[]
+v:2.8.1
+o:28
+
+
+https://www.instagram.com/p/BbiTxTBgsP9/
+id:1425767024389221
+ev:SubscribedButtonClick
+dl:https://www.instagram.com/p/BbiTxTBgsP9/
+rl:
+if:false
+ts:1510880970379
+cd[buttonText]:
+cd[buttonFeatures]:{"name":"","id":"","tag":"a","classList":"_8kphn _pak6p coreSpriteLeftChevron","innerText":"","numChildButtons":0,"destination":""}
+cd[formFeatures]:[]
+v:2.8.1
+o:28
+
+    <meta name="medium" content="video" />
+    <meta property="og:type" content="video" />
+    <meta property="og:video" content="https://scontent-sin6-2.cdninstagram.com/t50.2886-16/23619616_164949804101381_4881804977053368320_n.mp4" />
+    <meta property="og:video:secure_url" content="https://scontent-sin6-2.cdninstagram.com/t50.2886-16/23619616_164949804101381_4881804977053368320_n.mp4" />
+    <meta property="og:video:type" content="video/mp4" />
+    <meta property="og:video:width" content="640" />
+    <meta property="og:video:height" content="359" />
