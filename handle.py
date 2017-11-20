@@ -8,6 +8,7 @@ from robot import Robot
 from basic import Basic
 from material import Material
 from dao import Dao
+from spider import Spider
 import re
 
 class Handle(object):
@@ -17,6 +18,7 @@ class Handle(object):
         self.material = Material()
         self.dao  = Dao()
         self.dao.connect()
+        self.spider = Spider()
     def POST(self):
         try:
             webData = web.data()
@@ -91,11 +93,35 @@ class Handle(object):
                             sql = "select * from music where `artist` like %s limit 5;"
                             args = ('%s%%' % artist)
                             return self.getMusic(toUser, fromUser,sql, args)
-                content = self.robot.getRobotReply(fromUser, content)
-                print content
-                #content = "嗨，这么巧的!"
-                replyMsg = reply.TextMsg(toUser, fromUser, content)
-                return replyMsg.send()
+                else:
+                    reString = r'https'
+                    results = re.match(re.compile(reString), content)
+                    if results:
+                        page = self.spider.GET(content)
+                        results = self.spider.getInstagramAsset(page)
+                        i = 0
+                        content = ""
+                        for m in results:
+                            content = content + m.group(1) + "\n"
+                            i = i + 1
+                        if i == 0:
+                            reString = r'<meta property="og:video" content="(.*?)" />'
+                            results = self.spider.getInstagramAsset(page, None, reString)
+                            for m in results:
+                                content = content + m.group(1) + "\n"
+                                i = i + 1
+                        if i == 0:
+                            content = "对不起，程序猿比较菜，没有找到该资源！"
+                        else:
+                            replyMsg = reply.TextMsg(toUser, fromUser, content)
+                            return replyMsg.send()
+
+                    else:
+                        content = self.robot.getRobotReply(fromUser, content)
+                        print content
+                        #content = "嗨，这么巧的!"
+                        replyMsg = reply.TextMsg(toUser, fromUser, content)
+                        return replyMsg.send()
 
             elif isinstance(recMsg, receive.Msg) and recMsg.MsgType == 'image':
                 toUser = recMsg.FromUserName
