@@ -105,12 +105,12 @@ class Handle(object):
 						for m in results:
 							content = content + m.group(1) + "\n"
 							i = i + 1
-						if i == 0:
-							reString = r'<meta property="og:video" content="(.*?)" />'
-							results = self.spider.getInstagramAsset(page, None, reString)
-							for m in results:
-								content = content + m.group(1) + "\n"
-								i = i + 1
+
+						reString = r'<meta property="og:video" content="(.*?)" />'
+						results = self.spider.getInstagramAsset(page, None, reString)
+						for m in results:
+							content = content + m.group(1) + "\n"
+							i = i + 1
 						if i == 0:
 							content = "对不起，程序猿比较菜，没有找到该资源！"
 							print content
