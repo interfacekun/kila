@@ -39,8 +39,7 @@ class Spider():
 	def GET(self, url, headers = None, data = {}):
 		headers = headers or self.headers
 		try:
-
-			if data :
+			if data:
 				dataStr = urllib.urlencode(data)
 				url = url + "?" + dataStr
 				print(url)
@@ -154,8 +153,8 @@ class Spider():
 		if not page:
 			page = self.GET(url)
 		if type(page) == type('a'):
-			reString = reString or r'"(https://scontent-sin6-2.cdninstagram.com/[^{]*?/\w750x750/.*?)"'
-			results = re.finditer(re.compile(reString), page)
+			reString = reString or r'"(https://[^{]*?/\w750x750/.*?)"'
+			results = re.finditer(re.compile(reString, re.S), page)
 			return results
 
 
@@ -208,5 +207,26 @@ if __name__ == '__main__':
 	# 			print(args)
 	# 			spider.getMusic(sql, args)
 	# 			
-	url = "https://www.instagram.com/p/Bbf6cNOnolj/"
-	spider.getInstagramAsset(None, url)
+	content = "https://www.instagram.com/p/Bbf6cNOnolj/"
+	reString = r'https'
+	results = re.match(re.compile(reString), content)
+	if results:
+		page = spider.GET(content)
+		#print page
+		results = spider.getInstagramAsset(page)
+		i = 0
+		content = ""
+		for m in results:
+			content = content + m.group(1) + "\n"
+			i = i + 1
+		if i == 0:
+			reString = r'<meta property="og:video" content="(.*?)" />'
+			results = spider.getInstagramAsset(page, None, reString)
+			for m in results:
+				content = content + m.group(1) + "\n"
+				i = i + 1
+		if i == 0:
+			content = "对不起，程序猿比较菜，没有找到该资源！"
+			print content
+		else:
+			print content
